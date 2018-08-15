@@ -1,6 +1,8 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -65,13 +67,44 @@ public class UserController {
 	@ResponseBody
 	public Map<String,Object> getUserByName(@PathVariable String loginName){
 		Map<String,Object> result = new HashMap<String, Object>();
+		long beginTime=System.currentTimeMillis();
 		User user = userService.readByLoginName(loginName);
+		long time=System.currentTimeMillis()-beginTime;
+		System.out.println(time);
 		Assert.notNull(user);
 		result.put("name", user.getName());
 		result.put("loginName", user.getLoginName());
+
 		result.put("departmentName",user.getDepartment().getName());
-		result.put("roleName", user.getRoleList().get(0).getName());
+		//result.put("roleName", user.getRoleList().get(0).getName());
 		return result;
+	}
+	/**
+	 * @Title: UserController
+	 * @Description: 由loginName获取user
+	 * @param loginName
+	 * @author mengfanzhu
+	 * @throws
+	 */
+	@RequestMapping("/getListUserByLoginName/{loginName}")
+	@ResponseBody
+	public List<Map<String,Object>> getListUserByName(@PathVariable String loginName){
+		Map<String,Object> result = new HashMap<String, Object>();
+		long beginTime=System.currentTimeMillis();
+		List<User> users = userService.findListByLoginName(loginName);
+		long time=System.currentTimeMillis()-beginTime;
+		System.out.println(time);
+		//Assert.notNull(user);
+
+		List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
+       for (User user : users) {
+		  result.put("name", user.getName());
+		  result.put("loginName", user.getLoginName());
+		  result.put("departmentName", user.getDepartment().getName());
+		  list.add(result);
+		}
+		//result.put("roleName", user.getRoleList().get(0).getName());
+		return list;
 	}
 	/** 
 	 * @Title: UserController
@@ -95,7 +128,27 @@ public class UserController {
 		result.put("name", user.getName());
 		result.put("loginName", user.getLoginName());
 		result.put("departmentName",user.getDepartment().getName());
-		result.put("roleName", user.getRoleList().get(0).getName());
+		//result.put("roleName", user.getRoleList().get(0).getName());
 		return result;
+	}
+	@RequestMapping("/getbyid/{id}")
+	@ResponseBody
+	public User getbyid(@PathVariable String id){
+		User user = userService.getById(id);
+		return user;
+	}
+	@RequestMapping("/delbyid/{id}")
+	@ResponseBody
+	public Integer delByUserId(@PathVariable String id){
+		userService.delByUserId(id);
+		return 1;
+	}
+	@RequestMapping("/updateUser/{id}/{name}")
+	@ResponseBody
+	public Integer updateUser(@PathVariable String id,@PathVariable String name){
+		//User user=userService.getById(id);
+		//user.setLoginName(name);
+		userService.updateUser(name,id);
+		return 1;
 	}
 }

@@ -16,6 +16,8 @@ import com.example.entity.Department;
 import com.example.entity.Role;
 import com.example.entity.User;
 
+import javax.persistence.PersistenceContext;
+
 
 /** 
 * @ClassName: UserRedisService 
@@ -56,8 +58,8 @@ public class UserRedisService {
 	public User getUserRedis(String loginName){
 		User user = userRedis.getUserByKey(this.getClass().getName()+":userByLoginName:"+loginName);
 		Assert.notNull(user,"用户为空！");
-		logger.info("===user=== name:{},loginName: {},departmentName:{}, roleName:{}",
-				user.getName(),user.getLoginName(),user.getDepartment().getName(),user.getRoleList().get(0).getName());
+		//logger.info("===user=== name:{},loginName: {},departmentName:{}, roleName:{}",
+		//		user.getName(),user.getLoginName(),user.getDepartment().getName(),user.getRoleList().get(0).getName());
 		return user;
 	}
 }

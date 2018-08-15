@@ -1,6 +1,7 @@
 package com.example.entity;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="boot_department")
-public class Department {
+public class Department implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
