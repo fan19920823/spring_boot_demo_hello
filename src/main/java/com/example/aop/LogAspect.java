@@ -30,7 +30,7 @@ public class LogAspect {
         System.out.println("HTTP_METHOD : " + request.getMethod());
         System.out.println("IP : " + request.getRemoteAddr());
         System.out.println("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        System.out.println("ARGS : " + Arrays.toString(joinPoint.getArgs()));
+        System.out.println("123");
     }
 
     @AfterReturning(returning = "ret", pointcut = "webLog()")
